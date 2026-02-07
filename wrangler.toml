@@ -1,0 +1,14 @@
+name = "solarpilled-site"
+compatibility_date = "2026-02-07"
+pages_build_output_dir = "dist"
+
+# KV Namespace binding
+[[kv_namespaces]]
+binding = "CACHE"
+id = "bf4dede5dd1f4ff1b54d3cc4dfff0aae"
+
+# D1 Database binding (pending token permission update)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "solarpilled-db"
+# database_id = "<pending>"
