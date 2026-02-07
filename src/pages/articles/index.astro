@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const articles = allArticles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Articles — solarpilled" description="Data-driven solar research, guides, and analysis.">
+  <section class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
+      Articles
+    </h1>
+    <p class="text-slate-500 dark:text-slate-400 mb-10">
+      Research and analysis worth bookmarking. No SEO filler.
+    </p>
+
+    {articles.length === 0 ? (
+      <p class="text-slate-400 dark:text-slate-500">First articles coming soon. Subscribe to get notified.</p>
+    ) : (
+      <div class="divide-y divide-slate-100 dark:divide-slate-800">
+        {articles.map((article) => (
+          <ArticleCard
+            title={article.data.title}
+            description={article.data.description}
+            pubDate={article.data.pubDate}
+            tags={article.data.tags}
+            slug={article.id}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

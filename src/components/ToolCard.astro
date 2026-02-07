@@ -1,0 +1,27 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  status: 'live' | 'coming-soon';
+  href?: string;
+}
+
+const { title, description, icon, status, href = '#' } = Astro.props;
+---
+
+<div class="relative group border border-slate-200 dark:border-slate-800 rounded-xl p-6 hover:border-solar-300 dark:hover:border-solar-700 transition-colors">
+  {status === 'coming-soon' && (
+    <span class="absolute top-4 right-4 text-xs font-medium text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+      Coming soon
+    </span>
+  )}
+  <div class="text-3xl mb-3" aria-hidden="true">{icon}</div>
+  <h3 class="font-semibold text-slate-900 dark:text-white mb-1">{title}</h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400">{description}</p>
+  {status === 'live' && (
+    <a href={href} class="inline-block mt-3 text-sm font-medium text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">
+      Try it →
+    </a>
+  )}
+</div>

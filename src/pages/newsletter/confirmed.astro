@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Subscribed! — solarpilled" description="You're confirmed. Welcome to the solarpilled newsletter.">
+  <section class="max-w-lg mx-auto px-4 sm:px-6 py-20 text-center">
+    <div class="text-5xl mb-6" aria-hidden="true">☀️</div>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+      You're in
+    </h1>
+    <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+      Subscription confirmed. Check your inbox — we just sent your first welcome email.
+    </p>
+    <div class="bg-solar-50 dark:bg-solar-900/20 border border-solar-200 dark:border-solar-800 rounded-xl p-5 text-left">
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        <strong class="text-slate-900 dark:text-white">What happens next:</strong> 
+        You'll get a short welcome series (3 emails over ~10 days) with our best resources. 
+        After that, expect ~2 emails per month with new research and analysis.
+      </p>
+    </div>
+    <p class="mt-8">
+      <a href="/articles" class="text-sm font-medium text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">
+        Browse articles while you wait →
+      </a>
+    </p>
+  </section>
+</BaseLayout>

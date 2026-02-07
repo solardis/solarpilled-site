@@ -1,0 +1,157 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Solar research for people who actually think. Data-driven guides, tools, and analysis — no sales pitch.',
+  ogImage = '/og-default.png'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts — preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Dark mode: respect system preference, allow toggle -->
+    <script is:inline>
+      const theme = localStorage.getItem('theme');
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <slot name="header">
+      <header class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm sticky top-0 z-50">
+        <nav class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+          <a href="/" class="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white hover:text-solar-600 dark:hover:text-solar-400 transition-colors">
+            <span class="text-2xl" aria-hidden="true">☀️</span>
+            <span>solarpilled</span>
+          </a>
+
+          <div class="flex items-center gap-6">
+            <div class="hidden sm:flex items-center gap-6 text-sm font-medium">
+              <a href="/articles" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Articles</a>
+              <a href="/about" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">About</a>
+              <a href="/newsletter" class="text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">Newsletter</a>
+            </div>
+
+            <!-- Theme toggle -->
+            <button
+              id="theme-toggle"
+              type="button"
+              class="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z" clip-rule="evenodd" /></svg>
+              <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
+            </button>
+
+            <!-- Mobile menu button -->
+            <button
+              id="mobile-menu-btn"
+              type="button"
+              class="sm:hidden p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Open menu"
+              aria-expanded="false"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden sm:hidden border-t border-slate-200 dark:border-slate-800 px-4 pb-4">
+          <div class="flex flex-col gap-3 pt-3 text-sm font-medium">
+            <a href="/articles" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Articles</a>
+            <a href="/about" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">About</a>
+            <a href="/newsletter" class="text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300">Newsletter</a>
+          </div>
+        </div>
+      </header>
+    </slot>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-200 dark:border-slate-800 mt-16">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div>
+            <a href="/" class="flex items-center gap-2 font-bold text-slate-900 dark:text-white mb-3">
+              <span aria-hidden="true">☀️</span>
+              <span>solarpilled</span>
+            </a>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Solar research for people who actually think.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-sm text-slate-900 dark:text-white mb-3">Navigate</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/articles" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">Articles</a></li>
+              <li><a href="/about" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">About</a></li>
+              <li><a href="/newsletter" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">Newsletter</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold text-sm text-slate-900 dark:text-white mb-3">Stay Updated</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">No spam. Just solar research worth reading.</p>
+            <a href="/newsletter" class="inline-block text-sm font-medium text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">Subscribe →</a>
+          </div>
+        </div>
+        <div class="mt-10 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400 dark:text-slate-500">
+          © {new Date().getFullYear()} solarpilled.com — Not a solar company. A resource.
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // Theme toggle
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+
+      // Mobile menu
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      menuBtn?.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!expanded));
+        menu?.classList.toggle('hidden');
+      });
+    </script>
+  </body>
+</html>

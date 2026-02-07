@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content, headings } = await render(article);
+
+const formattedDate = article.data.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// Estimate reading time (~200 words per minute)
+const wordCount = article.body?.split(/\s+/).length ?? 0;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+// Get related articles by matching tags
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const relatedArticles = allArticles
+  .filter((a) => a.id !== article.id)
+  .filter((a) => a.data.tags.some((tag: string) => article.data.tags.includes(tag)))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+
+// Build ToC from headings
+const tocHeadings = headings.filter((h) => h.depth <= 3);
+---
+
+<BaseLayout title={`${article.data.title} — solarpilled`} description={article.data.description}>
+  <article class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+    <!-- Article header -->
+    <header class="mb-10">
+      <div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <time datetime={article.data.pubDate.toISOString()}>{formattedDate}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readingTime} min read</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-3">
+        {article.data.title}
+      </h1>
+      <p class="text-lg text-slate-500 dark:text-slate-400">
+        {article.data.description}
+      </p>
+      {article.data.tags.length > 0 && (
+        <div class="flex gap-2 mt-4">
+          {article.data.tags.map((tag: string) => (
+            <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-full">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Table of Contents -->
+    {tocHeadings.length > 3 && (
+      <nav class="mb-10 p-5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl" aria-label="Table of contents">
+        <h2 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">In this article</h2>
+        <ul class="space-y-1.5 text-sm">
+          {tocHeadings.map((heading) => (
+            <li class:list={[heading.depth === 3 && 'ml-4']}>
+              <a href={`#${heading.slug}`} class="text-slate-500 dark:text-slate-400 hover:text-solar-600 dark:hover:text-solar-400 transition-colors">
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <!-- Article content -->
+    <div class="
+      [&>h2]:text-xl [&>h2]:font-semibold [&>h2]:text-slate-900 [&>h2]:dark:text-white [&>h2]:mt-10 [&>h2]:mb-3
+      [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:text-slate-900 [&>h3]:dark:text-white [&>h3]:mt-8 [&>h3]:mb-2
+      [&>p]:text-slate-600 [&>p]:dark:text-slate-400 [&>p]:leading-relaxed [&>p]:mb-4
+      [&>ul]:space-y-1 [&>ul]:mb-4 [&>ul]:text-slate-600 [&>ul]:dark:text-slate-400
+      [&>ol]:space-y-1 [&>ol]:mb-4 [&>ol]:text-slate-600 [&>ol]:dark:text-slate-400 [&>ol]:list-decimal [&>ol]:pl-5
+      [&>ul>li]:relative [&>ul>li]:pl-5 [&>ul>li]:before:content-['–'] [&>ul>li]:before:absolute [&>ul>li]:before:left-0 [&>ul>li]:before:text-slate-400
+      [&_strong]:text-slate-900 [&_strong]:dark:text-white [&_strong]:font-semibold
+      [&>blockquote]:border-l-2 [&>blockquote]:border-solar-400 [&>blockquote]:pl-4 [&>blockquote]:text-slate-500 [&>blockquote]:italic [&>blockquote]:my-6
+      [&>pre]:bg-slate-900 [&>pre]:dark:bg-slate-800 [&>pre]:rounded-lg [&>pre]:p-4 [&>pre]:my-4 [&>pre]:overflow-x-auto
+      [&>code]:text-sm [&>code]:bg-slate-100 [&>code]:dark:bg-slate-800 [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded
+    ">
+      <Content />
+    </div>
+
+    <!-- Related articles -->
+    {relatedArticles.length > 0 && (
+      <section class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Related</h2>
+        <div class="space-y-3">
+          {relatedArticles.map((related) => (
+            <a href={`/articles/${related.id}`} class="block p-4 -mx-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+              <h3 class="font-medium text-slate-900 dark:text-white">{related.data.title}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{related.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Newsletter CTA -->
+    <div class="mt-14">
+      <NewsletterSignup heading="Enjoyed this? Get more like it." />
+    </div>
+  </article>
+</BaseLayout>

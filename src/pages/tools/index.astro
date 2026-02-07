@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolCard from '../../components/ToolCard.astro';
+---
+
+<BaseLayout title="Solar Tools — solarpilled" description="Free solar calculators and tools. No email required. No sales pitch. Just useful math.">
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12">
+    <div class="max-w-2xl">
+      <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+        Tools
+      </h1>
+      <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+        Solar calculators that respect your intelligence. No email gates. No phone calls. Just math you can verify.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <ToolCard
+        title="Should I Go Solar?"
+        description="An honest calculator that can say no. Enter your details, get a real recommendation with 25-year projections."
+        icon="☀️"
+        status="live"
+        href="/tools/solar-calculator"
+      />
+      <ToolCard
+        title="Solar Quote Checker"
+        description="Got a quote? Check if the price, equipment, and terms are fair for your area."
+        icon="🔍"
+        status="coming-soon"
+      />
+      <ToolCard
+        title="Battery vs. No Battery"
+        description="See if adding battery storage makes financial sense for your specific situation."
+        icon="🔋"
+        status="coming-soon"
+      />
+    </div>
+  </section>
+</BaseLayout>

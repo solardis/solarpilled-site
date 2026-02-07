@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Check your email — solarpilled" description="Almost there! Check your inbox to confirm your subscription.">
+  <section class="max-w-lg mx-auto px-4 sm:px-6 py-20 text-center">
+    <div class="text-5xl mb-6" aria-hidden="true">📬</div>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+      Check your email
+    </h1>
+    <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+      We sent a confirmation link to your inbox. Click it to finish subscribing.
+    </p>
+    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 text-left">
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        <strong class="text-slate-900 dark:text-white">Don't see it?</strong> Check your spam folder. 
+        The email comes from <code class="text-xs bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded">newsletter@solarpilled.com</code>.
+      </p>
+    </div>
+    <p class="mt-8">
+      <a href="/" class="text-sm text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">
+        ← Back to solarpilled.com
+      </a>
+    </p>
+  </section>
+</BaseLayout>

@@ -1,8 +1,107 @@
 ---
-import Base from '../layouts/Base.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const latestArticles = allArticles
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
-<Base title="Home">
-  <h1>☀️ solarpilled</h1>
-  <p>Tools and data for smart homeowners going solar. No hype, just numbers.</p>
-  <p>Coming soon. We're building something useful.</p>
-</Base>
+
+<BaseLayout title="solarpilled — Solar research for people who actually think">
+  <!-- Hero -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12">
+    <div class="max-w-2xl">
+      <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+        Solar research for people who actually think
+      </h1>
+      <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+        We're not selling panels. We're building the resource we wished existed when we started researching solar — data-driven analysis, honest tools, and zero sales pressure.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/articles" class="inline-flex justify-center items-center px-6 py-3 rounded-lg bg-solar-500 hover:bg-solar-600 text-white font-medium transition-colors">
+          Read our research
+        </a>
+        <a href="/newsletter" class="inline-flex justify-center items-center px-6 py-3 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 font-medium transition-colors">
+          Get the newsletter
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+      <div class="p-6">
+        <div class="text-2xl mb-2" aria-hidden="true">📊</div>
+        <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Data, not vibes</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Real numbers from real installations. We cite sources, show our math, and update when we're wrong.</p>
+      </div>
+      <div class="p-6">
+        <div class="text-2xl mb-2" aria-hidden="true">🔧</div>
+        <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Tools that work</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Calculators and comparisons built to help you make decisions, not to collect your phone number.</p>
+      </div>
+      <div class="p-6">
+        <div class="text-2xl mb-2" aria-hidden="true">🚫</div>
+        <h3 class="font-semibold text-slate-900 dark:text-white mb-1">No sales pitch</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400">We don't install solar. We don't get commissions. Our incentive is being useful.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools Preview -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex items-baseline justify-between mb-6">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Tools</h2>
+      <span class="text-sm text-slate-400 dark:text-slate-500">More coming soon</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <ToolCard
+        title="Solar Payback Calculator"
+        description="Input your actual utility rate, system cost, and incentives. Get a real payback estimate."
+        icon="🧮"
+        status="coming-soon"
+      />
+      <ToolCard
+        title="Net Metering Lookup"
+        description="Check your utility's net metering policy and what it means for your solar ROI."
+        icon="🔍"
+        status="coming-soon"
+      />
+      <ToolCard
+        title="Battery vs. No Battery"
+        description="See if adding battery storage makes financial sense for your specific situation."
+        icon="🔋"
+        status="coming-soon"
+      />
+    </div>
+  </section>
+
+  <!-- Latest Articles -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex items-baseline justify-between mb-6">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Latest Research</h2>
+      <a href="/articles" class="text-sm text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">View all →</a>
+    </div>
+    <div class="divide-y divide-slate-100 dark:divide-slate-800">
+      {latestArticles.map((article) => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          pubDate={article.data.pubDate}
+          tags={article.data.tags}
+          slug={article.id}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="max-w-2xl mx-auto px-4 sm:px-6 py-12">
+    <NewsletterSignup heading="Join the research" />
+  </section>
+</BaseLayout>

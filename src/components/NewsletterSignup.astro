@@ -1,0 +1,102 @@
+---
+interface Props {
+  variant?: 'inline' | 'card';
+  heading?: string;
+}
+
+const {
+  variant = 'card',
+  heading = 'Get solar research that respects your intelligence'
+} = Astro.props;
+
+const isCard = variant === 'card';
+---
+
+<section class:list={[
+  'newsletter-signup',
+  isCard && 'bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8',
+  !isCard && 'py-4'
+]}>
+  <h3 class:list={[
+    'font-semibold',
+    isCard ? 'text-lg mb-2' : 'text-base mb-1',
+    'text-slate-900 dark:text-white'
+  ]}>{heading}</h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 newsletter-description">
+    No spam. No sales pitches. Just data-driven solar analysis, delivered when we have something worth saying.
+  </p>
+  <form
+    action="/api/newsletter/subscribe"
+    method="POST"
+    class="newsletter-form flex flex-col sm:flex-row gap-3"
+  >
+    <label for={`email-${variant}`} class="sr-only">Email address</label>
+    <input
+      id={`email-${variant}`}
+      type="email"
+      name="email"
+      required
+      placeholder="you@example.com"
+      class="newsletter-email flex-1 px-4 py-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-solar-500 focus:border-transparent"
+    />
+    <button
+      type="submit"
+      class="newsletter-submit px-6 py-2.5 rounded-lg bg-solar-500 hover:bg-solar-600 text-white font-medium text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-solar-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+    >
+      Subscribe
+    </button>
+  </form>
+  <p class="newsletter-status text-xs mt-2 hidden"></p>
+  <p class="newsletter-meta text-xs text-slate-400 dark:text-slate-500 mt-2">
+    ~2 emails/month. Unsubscribe anytime. <a href="/about#privacy" class="underline hover:text-slate-600 dark:hover:text-slate-300">Privacy policy</a>.
+  </p>
+</section>
+
+<script is:inline>
+  document.querySelectorAll('.newsletter-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formEl = e.target;
+      const emailInput = formEl.querySelector('.newsletter-email');
+      const submitBtn = formEl.querySelector('.newsletter-submit');
+      const statusEl = formEl.parentElement.querySelector('.newsletter-status');
+      const descEl = formEl.parentElement.querySelector('.newsletter-description');
+      const metaEl = formEl.parentElement.querySelector('.newsletter-meta');
+
+      const email = emailInput.value.trim();
+      if (!email) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Subscribing...';
+
+      try {
+        const res = await fetch('/api/newsletter/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          // Show success state
+          formEl.classList.add('hidden');
+          if (descEl) descEl.classList.add('hidden');
+          if (metaEl) metaEl.classList.add('hidden');
+          statusEl.textContent = '📬 Check your email to confirm your subscription.';
+          statusEl.className = 'newsletter-status text-sm mt-2 text-solar-600 dark:text-solar-400 font-medium';
+        } else {
+          statusEl.textContent = data.error || 'Something went wrong. Please try again.';
+          statusEl.className = 'newsletter-status text-xs mt-2 text-red-500';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Subscribe';
+        }
+      } catch (err) {
+        statusEl.textContent = 'Network error. Please try again.';
+        statusEl.className = 'newsletter-status text-xs mt-2 text-red-500';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Subscribe';
+      }
+    });
+  });
+</script>

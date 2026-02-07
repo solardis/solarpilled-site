@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+---
+
+<BaseLayout title="About — solarpilled" description="What solarpilled is, what it isn't, and why we built it.">
+  <article class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-8">
+      What this is (and isn't)
+    </h1>
+
+    <div class="prose prose-slate dark:prose-invert max-w-none space-y-6">
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        solarpilled is a solar research resource for homeowners who want real information, not a sales funnel.
+      </p>
+
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-10 mb-3">We are not a solar company</h2>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        We don't install panels. We don't sell equipment. We don't get paid when you sign a contract with an installer. That distinction matters because it means our analysis has no financial incentive to be anything other than accurate.
+      </p>
+
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-10 mb-3">Our approach</h2>
+      <ul class="space-y-3 text-slate-600 dark:text-slate-400">
+        <li class="flex gap-3">
+          <span class="text-solar-500 font-bold mt-0.5">→</span>
+          <span><strong class="text-slate-900 dark:text-white">Data first.</strong> Every claim we make comes with numbers, sources, and methodology. If we're estimating, we say so.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-solar-500 font-bold mt-0.5">→</span>
+          <span><strong class="text-slate-900 dark:text-white">No BS.</strong> The solar industry has a marketing problem. We skip the hype and focus on what actually matters for your decision.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-solar-500 font-bold mt-0.5">→</span>
+          <span><strong class="text-slate-900 dark:text-white">Honest trade-offs.</strong> Solar isn't perfect for everyone. We'll tell you when it doesn't make sense, and why.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-solar-500 font-bold mt-0.5">→</span>
+          <span><strong class="text-slate-900 dark:text-white">Tools over content.</strong> Analysis you can read is good. Calculators you can use with your own numbers are better.</span>
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-10 mb-3">Why this exists</h2>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        When we started researching solar for our own homes, we found a landscape of content designed to generate leads, not inform decisions. SEO-optimized fluff from companies that make money when you buy panels.
+      </p>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        The good information existed — in utility filings, academic papers, and scattered forum posts. But nobody was putting it together in a way that respected the reader's time and intelligence.
+      </p>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        That's what solarpilled is. The resource we wished existed.
+      </p>
+
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-10 mb-3">How we sustain this</h2>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        Quality research takes time. We plan to sustain this through newsletter sponsorships and clearly-disclosed affiliate relationships — never pay-to-play rankings or misleading comparisons. Trust is the product. The moment we compromise it, nothing else works.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <NewsletterSignup />
+    </div>
+  </article>
+</BaseLayout>

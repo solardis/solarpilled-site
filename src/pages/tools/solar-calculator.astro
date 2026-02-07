@@ -1,0 +1,742 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Should I Go Solar? — Free Solar Calculator | solarpilled"
+  description="An honest solar calculator that can say no. Estimate your payback period, 25-year savings, and whether solar actually makes sense for you."
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-16">
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <a href="/tools" class="hover:text-slate-700 dark:hover:text-slate-200 transition-colors">Tools</a>
+        <span aria-hidden="true">→</span>
+        <span>Solar Calculator</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-3">
+        Should I Go Solar?
+      </h1>
+      <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">
+        An honest calculator that can tell you <strong class="text-slate-700 dark:text-slate-300">no</strong>.
+        Enter your details and get a real recommendation — not a lead form.
+      </p>
+    </header>
+
+    <!-- Calculator Form -->
+    <form id="solar-form" class="space-y-8" novalidate>
+      <!-- Section 1: Location & Bill -->
+      <fieldset class="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+        <legend class="text-lg font-semibold text-slate-900 dark:text-white px-2">Your Situation</legend>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+          <div>
+            <label for="state" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              State
+            </label>
+            <select id="state" name="state" required
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="">Select your state…</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="monthly-bill" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Monthly Electricity Bill
+            </label>
+            <div class="relative">
+              <span class="absolute left-3 top-2.5 text-slate-400 text-sm">$</span>
+              <input type="number" id="monthly-bill" name="monthlyBill" min="30" max="2000" step="5" required placeholder="150"
+                class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white pl-7 pr-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors" />
+            </div>
+          </div>
+
+          <div>
+            <label for="roof-age" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Roof Age
+            </label>
+            <select id="roof-age" name="roofAge" required
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="new">Under 5 years</option>
+              <option value="mid">5–15 years</option>
+              <option value="old">15–25 years</option>
+              <option value="replace">25+ years (may need replacement)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="shading" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Roof Shading
+            </label>
+            <select id="shading" name="shading" required
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="none">No shade</option>
+              <option value="light">Light shade (a few hours)</option>
+              <option value="partial">Partial shade (morning or afternoon)</option>
+              <option value="heavy">Heavy shade (most of the day)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="roof-direction" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Primary Roof Direction
+            </label>
+            <select id="roof-direction" name="roofDirection" required
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="south">South</option>
+              <option value="sw">Southwest</option>
+              <option value="se">Southeast</option>
+              <option value="west">West</option>
+              <option value="east">East</option>
+              <option value="flat">Flat</option>
+              <option value="north">North</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="years-staying" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              How Long You'll Stay
+            </label>
+            <select id="years-staying" name="yearsStaying" required
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="3">Less than 3 years</option>
+              <option value="5">3–5 years</option>
+              <option value="10" selected>5–10 years</option>
+              <option value="15">10–15 years</option>
+              <option value="25">15+ years</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 2: Financing & Preferences -->
+      <fieldset class="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+        <legend class="text-lg font-semibold text-slate-900 dark:text-white px-2">Financing & Assumptions</legend>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+          <div>
+            <label for="financing" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Financing Preference
+            </label>
+            <select id="financing" name="financing" required
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="cash">Cash purchase</option>
+              <option value="loan">Solar loan</option>
+              <option value="lease">Lease / PPA</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="net-metering" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Net Metering Available?
+            </label>
+            <select id="net-metering" name="netMetering"
+              class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-3 py-2.5 text-sm focus:ring-2 focus:ring-solar-500 focus:border-solar-500 outline-none transition-colors">
+              <option value="yes" selected>Yes / I think so</option>
+              <option value="no">No</option>
+              <option value="unsure">Not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Rate trend slider -->
+        <div class="mt-6">
+          <label for="rate-trend" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            Electricity Rate Trend Assumption
+          </label>
+          <div class="flex items-center gap-4">
+            <span class="text-xs text-slate-400 whitespace-nowrap">Conservative (2%/yr)</span>
+            <input type="range" id="rate-trend" name="rateTrend" min="2" max="6" step="0.5" value="3.5"
+              class="flex-1 h-2 rounded-full appearance-none bg-slate-200 dark:bg-slate-700 accent-solar-500 cursor-pointer" />
+            <span class="text-xs text-slate-400 whitespace-nowrap">Aggressive (6%/yr)</span>
+          </div>
+          <p class="mt-1 text-xs text-slate-400">
+            <span id="rate-trend-value">3.5</span>%/yr — U.S. average has been ~3.5%/yr over the last decade.
+          </p>
+        </div>
+      </fieldset>
+
+      <!-- Submit -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button type="submit"
+          class="inline-flex justify-center items-center px-8 py-3 rounded-lg bg-solar-500 hover:bg-solar-600 text-white font-semibold transition-colors text-base cursor-pointer">
+          Calculate My Solar Numbers
+        </button>
+        <button type="reset" id="reset-btn"
+          class="inline-flex justify-center items-center px-6 py-3 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 font-medium transition-colors text-sm cursor-pointer">
+          Reset
+        </button>
+      </div>
+    </form>
+
+    <!-- Results (hidden until calculated) -->
+    <div id="results" class="hidden mt-12 space-y-8">
+      <!-- Verdict -->
+      <div id="verdict-section" class="rounded-xl p-6 sm:p-8">
+        <div class="flex items-start gap-4">
+          <span id="verdict-icon" class="text-4xl" aria-hidden="true"></span>
+          <div>
+            <h2 id="verdict-title" class="text-2xl font-bold mb-2"></h2>
+            <p id="verdict-text" class="text-slate-600 dark:text-slate-400 leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Numbers -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="key-numbers">
+        <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">System Size</p>
+          <p id="stat-system-size" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">—</p>
+        </div>
+        <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Net Cost (After ITC)</p>
+          <p id="stat-net-cost" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">—</p>
+        </div>
+        <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Payback Period</p>
+          <p id="stat-payback" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">—</p>
+        </div>
+        <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">25-Year Savings</p>
+          <p id="stat-savings" class="text-xl sm:text-2xl font-bold text-solar-600 dark:text-solar-400">—</p>
+        </div>
+      </div>
+
+      <!-- Financing Comparison -->
+      <section class="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Financing Comparison</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm" id="financing-table">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-800 text-left">
+                <th class="pb-2 pr-4 text-slate-500 dark:text-slate-400 font-medium"></th>
+                <th class="pb-2 px-4 text-slate-500 dark:text-slate-400 font-medium text-right">Cash</th>
+                <th class="pb-2 px-4 text-slate-500 dark:text-slate-400 font-medium text-right">Loan (7%, 15yr)</th>
+                <th class="pb-2 pl-4 text-slate-500 dark:text-slate-400 font-medium text-right">Lease/PPA</th>
+              </tr>
+            </thead>
+            <tbody id="financing-tbody" class="text-slate-700 dark:text-slate-300"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Chart -->
+      <section class="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Cumulative Savings Over 25 Years</h3>
+        <div class="relative" style="height: 320px;">
+          <canvas id="savings-chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Assumptions -->
+      <section class="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-3">Our Assumptions</h3>
+        <ul id="assumptions-list" class="space-y-1 text-sm text-slate-600 dark:text-slate-400 list-disc pl-5"></ul>
+      </section>
+
+      <!-- What this doesn't include -->
+      <section class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-3">⚠️ What This Doesn't Include</h3>
+        <ul class="space-y-1 text-sm text-slate-600 dark:text-slate-400 list-disc pl-5">
+          <li>Actual roof measurements or satellite imagery — system size is estimated from your bill</li>
+          <li>Your specific utility's rate structure (TOU, tiered) — we use state averages</li>
+          <li>Local permitting costs, HOA restrictions, or interconnection fees</li>
+          <li>Tree growth or new construction that could add shading over time</li>
+          <li>Home value increase — studies show 3–4% but it varies</li>
+          <li>Battery storage costs or benefits</li>
+          <li>State-specific SRECs (Solar Renewable Energy Credits) — varies widely</li>
+          <li>Potential changes to net metering policies during the system lifetime</li>
+        </ul>
+        <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+          This tool gives you a solid starting estimate. For a precise number, get 3+ quotes from local installers.
+          <a href="/articles" class="text-solar-600 dark:text-solar-400 hover:underline">Read our guides</a> on what to look for.
+        </p>
+      </section>
+
+      <!-- Share / Print -->
+      <div class="flex flex-wrap gap-3">
+        <button id="print-btn" type="button"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-medium transition-colors cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Print Results
+        </button>
+        <button id="copy-btn" type="button"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-medium transition-colors cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+          Copy Summary
+        </button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Chart.js from CDN (lightweight) -->
+  <script is:inline src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script is:inline>
+  // =============================================================
+  // STATE DATA: Solar irradiance, utility rates, incentives
+  // Sources: NREL, EIA, DSIRE (simplified for v1)
+  // =============================================================
+  const STATE_DATA = {
+    AL: { name: "Alabama", sun: 4.7, rate: 0.132, incentive: 0, netMetering: true },
+    AK: { name: "Alaska", sun: 3.0, rate: 0.232, incentive: 0, netMetering: true },
+    AZ: { name: "Arizona", sun: 6.5, rate: 0.134, incentive: 0, netMetering: false },
+    AR: { name: "Arkansas", sun: 4.8, rate: 0.117, incentive: 0, netMetering: true },
+    CA: { name: "California", sun: 5.8, rate: 0.285, incentive: 0, netMetering: false },
+    CO: { name: "Colorado", sun: 5.5, rate: 0.148, incentive: 0, netMetering: true },
+    CT: { name: "Connecticut", sun: 4.0, rate: 0.268, incentive: 0, netMetering: true },
+    DE: { name: "Delaware", sun: 4.2, rate: 0.145, incentive: 0, netMetering: true },
+    FL: { name: "Florida", sun: 5.4, rate: 0.145, incentive: 0, netMetering: true },
+    GA: { name: "Georgia", sun: 4.9, rate: 0.136, incentive: 0, netMetering: false },
+    HI: { name: "Hawaii", sun: 5.5, rate: 0.410, incentive: 0.35, netMetering: false },
+    ID: { name: "Idaho", sun: 4.7, rate: 0.107, incentive: 0, netMetering: true },
+    IL: { name: "Illinois", sun: 4.0, rate: 0.162, incentive: 0, netMetering: true },
+    IN: { name: "Indiana", sun: 4.0, rate: 0.142, incentive: 0, netMetering: true },
+    IA: { name: "Iowa", sun: 4.2, rate: 0.141, incentive: 0, netMetering: true },
+    KS: { name: "Kansas", sun: 5.0, rate: 0.139, incentive: 0, netMetering: true },
+    KY: { name: "Kentucky", sun: 4.2, rate: 0.122, incentive: 0, netMetering: true },
+    LA: { name: "Louisiana", sun: 4.9, rate: 0.119, incentive: 0, netMetering: true },
+    ME: { name: "Maine", sun: 4.0, rate: 0.228, incentive: 0, netMetering: true },
+    MD: { name: "Maryland", sun: 4.3, rate: 0.162, incentive: 0, netMetering: true },
+    MA: { name: "Massachusetts", sun: 4.0, rate: 0.282, incentive: 0.15, netMetering: true },
+    MI: { name: "Michigan", sun: 3.7, rate: 0.178, incentive: 0, netMetering: true },
+    MN: { name: "Minnesota", sun: 4.0, rate: 0.148, incentive: 0, netMetering: true },
+    MS: { name: "Mississippi", sun: 4.8, rate: 0.126, incentive: 0, netMetering: true },
+    MO: { name: "Missouri", sun: 4.5, rate: 0.131, incentive: 0, netMetering: true },
+    MT: { name: "Montana", sun: 4.5, rate: 0.120, incentive: 0, netMetering: true },
+    NE: { name: "Nebraska", sun: 4.8, rate: 0.122, incentive: 0, netMetering: true },
+    NV: { name: "Nevada", sun: 6.2, rate: 0.137, incentive: 0, netMetering: false },
+    NH: { name: "New Hampshire", sun: 4.0, rate: 0.243, incentive: 0, netMetering: true },
+    NJ: { name: "New Jersey", sun: 4.2, rate: 0.185, incentive: 0, netMetering: true },
+    NM: { name: "New Mexico", sun: 6.2, rate: 0.139, incentive: 0.10, netMetering: true },
+    NY: { name: "New York", sun: 3.8, rate: 0.218, incentive: 0.20, netMetering: true },
+    NC: { name: "North Carolina", sun: 4.7, rate: 0.127, incentive: 0, netMetering: true },
+    ND: { name: "North Dakota", sun: 4.3, rate: 0.115, incentive: 0, netMetering: true },
+    OH: { name: "Ohio", sun: 3.8, rate: 0.149, incentive: 0, netMetering: true },
+    OK: { name: "Oklahoma", sun: 5.1, rate: 0.118, incentive: 0, netMetering: true },
+    OR: { name: "Oregon", sun: 4.0, rate: 0.130, incentive: 0, netMetering: true },
+    PA: { name: "Pennsylvania", sun: 3.9, rate: 0.168, incentive: 0, netMetering: true },
+    RI: { name: "Rhode Island", sun: 4.0, rate: 0.262, incentive: 0, netMetering: true },
+    SC: { name: "South Carolina", sun: 4.8, rate: 0.140, incentive: 0.25, netMetering: true },
+    SD: { name: "South Dakota", sun: 4.7, rate: 0.127, incentive: 0, netMetering: true },
+    TN: { name: "Tennessee", sun: 4.5, rate: 0.121, incentive: 0, netMetering: false },
+    TX: { name: "Texas", sun: 5.5, rate: 0.141, incentive: 0, netMetering: false },
+    UT: { name: "Utah", sun: 5.5, rate: 0.115, incentive: 0, netMetering: true },
+    VT: { name: "Vermont", sun: 3.8, rate: 0.213, incentive: 0, netMetering: true },
+    VA: { name: "Virginia", sun: 4.3, rate: 0.136, incentive: 0, netMetering: true },
+    WA: { name: "Washington", sun: 3.5, rate: 0.116, incentive: 0, netMetering: true },
+    WV: { name: "West Virginia", sun: 3.9, rate: 0.124, incentive: 0, netMetering: true },
+    WI: { name: "Wisconsin", sun: 3.8, rate: 0.162, incentive: 0, netMetering: true },
+    WY: { name: "Wyoming", sun: 5.2, rate: 0.115, incentive: 0, netMetering: true },
+    DC: { name: "D.C.", sun: 4.2, rate: 0.150, incentive: 0, netMetering: true }
+  };
+
+  // Multipliers for roof direction (relative to south=1.0)
+  const DIRECTION_FACTOR = {
+    south: 1.0, sw: 0.95, se: 0.95, west: 0.82, east: 0.82, flat: 0.90, north: 0.55
+  };
+
+  // Shading loss factor
+  const SHADING_FACTOR = {
+    none: 1.0, light: 0.90, partial: 0.75, heavy: 0.50
+  };
+
+  // Cost per watt (national average, 2026)
+  const COST_PER_WATT = 2.85;
+  const FEDERAL_ITC = 0.30;
+  const PANEL_DEGRADATION = 0.005; // 0.5% per year
+  const SYSTEM_LOSS = 0.14; // inverter, wiring, etc.
+  const LOAN_RATE = 0.07;
+  const LOAN_TERM = 15;
+  const LEASE_ESCALATOR = 0.029; // 2.9%/yr typical
+
+  // =============================================================
+  // Populate state dropdown
+  // =============================================================
+  const stateSelect = document.getElementById('state');
+  Object.entries(STATE_DATA)
+    .sort(([,a],[,b]) => a.name.localeCompare(b.name))
+    .forEach(([code, s]) => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = s.name;
+      stateSelect.appendChild(opt);
+    });
+
+  // Rate trend slider live update
+  const rateTrendSlider = document.getElementById('rate-trend');
+  const rateTrendValue = document.getElementById('rate-trend-value');
+  rateTrendSlider.addEventListener('input', () => {
+    rateTrendValue.textContent = rateTrendSlider.value;
+  });
+
+  // =============================================================
+  // CALCULATION ENGINE
+  // =============================================================
+  function calculate(inputs) {
+    const state = STATE_DATA[inputs.state];
+    const rate = state.rate;
+    const sunHours = state.sun;
+    const dirFactor = DIRECTION_FACTOR[inputs.roofDirection];
+    const shadeFactor = SHADING_FACTOR[inputs.shading];
+    const rateInflation = inputs.rateTrend / 100;
+    const hasNetMetering = inputs.netMetering === 'yes' || (inputs.netMetering === 'unsure' && state.netMetering);
+    const netMeteringFactor = hasNetMetering ? 1.0 : 0.75; // Without NM, excess generation is worth less
+
+    // Monthly kWh usage
+    const monthlyKwh = inputs.monthlyBill / rate;
+
+    // Annual kWh needed
+    const annualKwh = monthlyKwh * 12;
+
+    // Effective sun hours (accounting for direction, shading, system losses)
+    const effectiveSunHours = sunHours * dirFactor * shadeFactor * (1 - SYSTEM_LOSS);
+
+    // System size (kW) to cover annual usage
+    const systemSizeKw = annualKwh / (effectiveSunHours * 365);
+
+    // Cap at reasonable residential range
+    const cappedSystemSize = Math.min(Math.max(systemSizeKw, 3), 20);
+
+    // Year 1 production
+    const year1Production = cappedSystemSize * effectiveSunHours * 365;
+
+    // Costs
+    const grossCost = cappedSystemSize * 1000 * COST_PER_WATT;
+    const stateIncentive = grossCost * state.incentive;
+    const federalCredit = grossCost * FEDERAL_ITC;
+    const netCost = grossCost - federalCredit - stateIncentive;
+
+    // 25-year projection
+    const years = 25;
+    const cashFlow = { cash: [], loan: [], lease: [] };
+    let cumulativeCash = -netCost;
+    let paybackYear = null;
+
+    // Loan payment calc
+    const monthlyLoanRate = LOAN_RATE / 12;
+    const numPayments = LOAN_TERM * 12;
+    const monthlyPayment = grossCost * (1 - stateIncentive) * (1 - FEDERAL_ITC) *
+      (monthlyLoanRate * Math.pow(1 + monthlyLoanRate, numPayments)) /
+      (Math.pow(1 + monthlyLoanRate, numPayments) - 1);
+    const annualLoanPayment = monthlyPayment * 12;
+
+    let cumulativeLoan = 0;
+    let cumulativeLease = 0;
+
+    // Lease: typically starts at 10-20% below current bill
+    const leaseStartMonthly = inputs.monthlyBill * 0.85;
+
+    for (let y = 1; y <= years; y++) {
+      const degradation = Math.pow(1 - PANEL_DEGRADATION, y - 1);
+      const production = year1Production * degradation;
+      const rateThisYear = rate * Math.pow(1 + rateInflation, y);
+      const electricBillWithoutSolar = annualKwh * rateThisYear;
+
+      // Value of solar production
+      const solarValue = Math.min(production, annualKwh) * rateThisYear * netMeteringFactor;
+
+      // Cash: already paid upfront
+      cumulativeCash += solarValue;
+      cashFlow.cash.push(Math.round(cumulativeCash));
+
+      if (paybackYear === null && cumulativeCash >= 0) {
+        paybackYear = y;
+      }
+
+      // Loan
+      const loanPaymentThisYear = y <= LOAN_TERM ? annualLoanPayment : 0;
+      cumulativeLoan += solarValue - loanPaymentThisYear;
+      cashFlow.loan.push(Math.round(cumulativeLoan));
+
+      // Lease
+      const leasePayment = leaseStartMonthly * 12 * Math.pow(1 + LEASE_ESCALATOR, y - 1);
+      const leaseSavings = electricBillWithoutSolar - leasePayment;
+      cumulativeLease += leaseSavings;
+      cashFlow.lease.push(Math.round(cumulativeLease));
+    }
+
+    // Total 25-year savings (cash purchase)
+    const totalSavings = cashFlow.cash[years - 1];
+
+    // Warnings / flags
+    const warnings = [];
+    if (inputs.roofAge === 'replace') {
+      warnings.push('Your roof may need replacement before installing solar. Budget $8K–$15K for a new roof.');
+    }
+    if (inputs.roofAge === 'old') {
+      warnings.push('Your roof is aging. Consider a roof inspection before committing to solar.');
+    }
+    if (inputs.shading === 'heavy') {
+      warnings.push('Heavy shading significantly reduces solar production. You may need tree removal.');
+    }
+    if (inputs.roofDirection === 'north') {
+      warnings.push('North-facing roofs produce ~45% less than south-facing. Consider ground-mounted if possible.');
+    }
+    if (parseInt(inputs.yearsStaying) < 5) {
+      warnings.push('Short ownership periods make solar harder to recoup, even with home value increase.');
+    }
+    if (!hasNetMetering) {
+      warnings.push('Without net metering, excess solar production earns less. This reduces your savings by ~25%.');
+    }
+    if (inputs.monthlyBill < 75) {
+      warnings.push('With a low electricity bill, the savings from solar may not justify the upfront cost.');
+    }
+
+    // Verdict
+    let verdict, verdictType;
+    if (paybackYear && paybackYear <= parseInt(inputs.yearsStaying) && totalSavings > 5000 && inputs.shading !== 'heavy') {
+      verdictType = 'yes';
+      verdict = {
+        icon: '✅',
+        title: 'Solar looks like a solid investment for you.',
+        text: `Based on your inputs, you'd pay back the system in about ${paybackYear} years and save roughly $${Math.round(totalSavings / 1000)}K over 25 years. ${warnings.length ? 'But check the notes below.' : ''}`
+      };
+    } else if (paybackYear && paybackYear <= 15 && totalSavings > 0) {
+      verdictType = 'maybe';
+      verdict = {
+        icon: '🤔',
+        title: 'Solar could work, but there are caveats.',
+        text: `The math shows a ${paybackYear}-year payback and $${Math.round(totalSavings / 1000)}K in lifetime savings — but some factors work against you. ${warnings.join(' ')}`
+      };
+    } else {
+      verdictType = 'no';
+      const reasons = [];
+      if (!paybackYear || paybackYear > 20) reasons.push('the payback period exceeds 20 years');
+      if (totalSavings <= 0) reasons.push('lifetime savings are negative or negligible');
+      if (inputs.shading === 'heavy') reasons.push('heavy shading limits production');
+      verdict = {
+        icon: '❌',
+        title: 'Solar probably doesn\'t make sense for you right now.',
+        text: `Honestly? The numbers don't work well here — ${reasons.join(', ')}. ${warnings.join(' ')} That could change with higher utility rates, new incentives, or a different roof situation.`
+      };
+    }
+
+    return {
+      systemSizeKw: cappedSystemSize,
+      year1Production,
+      grossCost,
+      federalCredit,
+      stateIncentive,
+      netCost,
+      paybackYear,
+      totalSavings,
+      cashFlow,
+      verdict,
+      verdictType,
+      warnings,
+      annualKwh,
+      rate,
+      rateInflation,
+      hasNetMetering,
+      stateName: state.name,
+      annualLoanPayment,
+      leaseStartMonthly
+    };
+  }
+
+  // =============================================================
+  // RENDER RESULTS
+  // =============================================================
+  let chartInstance = null;
+
+  function renderResults(r) {
+    const results = document.getElementById('results');
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Verdict
+    const verdictSection = document.getElementById('verdict-section');
+    verdictSection.className = 'rounded-xl p-6 sm:p-8 border ' + {
+      yes: 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-900',
+      maybe: 'bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-900',
+      no: 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900'
+    }[r.verdictType];
+
+    document.getElementById('verdict-icon').textContent = r.verdict.icon;
+    document.getElementById('verdict-title').textContent = r.verdict.title;
+    document.getElementById('verdict-text').textContent = r.verdict.text;
+
+    // Key numbers
+    document.getElementById('stat-system-size').textContent = r.systemSizeKw.toFixed(1) + ' kW';
+    document.getElementById('stat-net-cost').textContent = '$' + Math.round(r.netCost).toLocaleString();
+    document.getElementById('stat-payback').textContent = r.paybackYear ? r.paybackYear + ' years' : '20+ yrs';
+    document.getElementById('stat-savings').textContent = (r.totalSavings >= 0 ? '+$' : '-$') + Math.abs(Math.round(r.totalSavings)).toLocaleString();
+
+    // Financing table
+    const tbody = document.getElementById('financing-tbody');
+    const rows = [
+      ['Upfront Cost', '$' + Math.round(r.netCost).toLocaleString(), '$0', '$0'],
+      ['Monthly Payment', '—', '$' + Math.round(r.annualLoanPayment / 12).toLocaleString(), '$' + Math.round(r.leaseStartMonthly).toLocaleString()],
+      ['You Own System?', 'Yes', 'Yes (after payoff)', 'No'],
+      ['25-Year Net', '$' + Math.round(r.cashFlow.cash[24]).toLocaleString(), '$' + Math.round(r.cashFlow.loan[24]).toLocaleString(), '$' + Math.round(r.cashFlow.lease[24]).toLocaleString()],
+      ['Federal Tax Credit', 'Yes (30%)', 'Yes (30%)', 'No (goes to lessor)']
+    ];
+    tbody.innerHTML = rows.map(row => `
+      <tr class="border-b border-slate-100 dark:border-slate-800/50">
+        <td class="py-2.5 pr-4 font-medium text-slate-700 dark:text-slate-300">${row[0]}</td>
+        <td class="py-2.5 px-4 text-right">${row[1]}</td>
+        <td class="py-2.5 px-4 text-right">${row[2]}</td>
+        <td class="py-2.5 pl-4 text-right">${row[3]}</td>
+      </tr>
+    `).join('');
+
+    // Chart
+    const ctx = document.getElementById('savings-chart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const gridColor = isDark ? 'rgba(148,163,184,0.1)' : 'rgba(148,163,184,0.2)';
+    const textColor = isDark ? '#94a3b8' : '#64748b';
+
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: Array.from({length: 25}, (_, i) => `Year ${i + 1}`),
+        datasets: [
+          {
+            label: 'Cash Purchase',
+            data: r.cashFlow.cash,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245,158,11,0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 0,
+            pointHitRadius: 10,
+            borderWidth: 2.5
+          },
+          {
+            label: 'Solar Loan',
+            data: r.cashFlow.loan,
+            borderColor: '#3b82f6',
+            backgroundColor: 'transparent',
+            fill: false,
+            tension: 0.3,
+            pointRadius: 0,
+            pointHitRadius: 10,
+            borderWidth: 2,
+            borderDash: [5, 3]
+          },
+          {
+            label: 'Lease / PPA',
+            data: r.cashFlow.lease,
+            borderColor: '#10b981',
+            backgroundColor: 'transparent',
+            fill: false,
+            tension: 0.3,
+            pointRadius: 0,
+            pointHitRadius: 10,
+            borderWidth: 2,
+            borderDash: [2, 2]
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            labels: { color: textColor, usePointStyle: true, padding: 16 }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y.toLocaleString()
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: gridColor },
+            ticks: { color: textColor, maxRotation: 0, autoSkip: true, maxTicksLimit: 6 }
+          },
+          y: {
+            grid: { color: gridColor },
+            ticks: {
+              color: textColor,
+              callback: v => (v >= 0 ? '$' : '-$') + Math.abs(v / 1000).toFixed(0) + 'K'
+            }
+          }
+        }
+      }
+    });
+
+    // Assumptions
+    const assumptionsList = document.getElementById('assumptions-list');
+    assumptionsList.innerHTML = [
+      `System cost: $${COST_PER_WATT}/watt (2026 national avg). Your area may differ by ±15%.`,
+      `Federal Investment Tax Credit: ${(FEDERAL_ITC * 100)}% (current through 2032, steps down after).`,
+      r.stateIncentive > 0 ? `State incentive: ${(r.stateIncentive / r.grossCost * 100).toFixed(0)}% for ${r.stateName}.` : `No major state incentive included for ${r.stateName}.`,
+      `Your electricity rate: $${r.rate.toFixed(3)}/kWh (${r.stateName} avg). Assumed to grow ${(r.rateInflation * 100).toFixed(1)}%/year.`,
+      `Panel degradation: ${(PANEL_DEGRADATION * 100).toFixed(1)}%/year (industry standard for Tier 1 panels).`,
+      `System losses (inverter, wiring, soiling): ${(SYSTEM_LOSS * 100)}%.`,
+      r.hasNetMetering ? 'Net metering: Yes — excess production credited at full retail rate.' : 'Net metering: No — excess production valued at ~75% of retail (estimated avoided-cost rate).',
+      `Loan assumptions: ${(LOAN_RATE * 100)}% APR, ${LOAN_TERM}-year term. No dealer fees included (they can add 15–30% — ask your installer).`,
+      `Lease assumptions: starts at 15% below your current bill, escalates ${(LEASE_ESCALATOR * 100).toFixed(1)}%/year.`
+    ].map(a => `<li>${a}</li>`).join('');
+  }
+
+  // =============================================================
+  // FORM HANDLING
+  // =============================================================
+  const form = document.getElementById('solar-form');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const state = document.getElementById('state').value;
+    if (!state) {
+      document.getElementById('state').focus();
+      return;
+    }
+
+    const bill = parseFloat(document.getElementById('monthly-bill').value);
+    if (!bill || bill < 30) {
+      document.getElementById('monthly-bill').focus();
+      return;
+    }
+
+    const inputs = {
+      state,
+      monthlyBill: bill,
+      roofAge: document.getElementById('roof-age').value,
+      shading: document.getElementById('shading').value,
+      roofDirection: document.getElementById('roof-direction').value,
+      yearsStaying: document.getElementById('years-staying').value,
+      financing: document.getElementById('financing').value,
+      netMetering: document.getElementById('net-metering').value,
+      rateTrend: parseFloat(document.getElementById('rate-trend').value)
+    };
+
+    const results = calculate(inputs);
+    renderResults(results);
+  });
+
+  // Reset
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    document.getElementById('results').classList.add('hidden');
+    if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+  });
+
+  // Print
+  document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+  // Copy summary
+  document.getElementById('copy-btn').addEventListener('click', () => {
+    const size = document.getElementById('stat-system-size').textContent;
+    const cost = document.getElementById('stat-net-cost').textContent;
+    const payback = document.getElementById('stat-payback').textContent;
+    const savings = document.getElementById('stat-savings').textContent;
+    const verdict = document.getElementById('verdict-title').textContent;
+
+    const text = `☀️ My Solar Estimate (solarpilled.com)\n\n${verdict}\n\nSystem: ${size} | Cost: ${cost} | Payback: ${payback} | 25yr Savings: ${savings}\n\nCalculate yours: ${window.location.href}`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copy-btn');
+      const orig = btn.innerHTML;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    });
+  });
+  </script>
+</BaseLayout>

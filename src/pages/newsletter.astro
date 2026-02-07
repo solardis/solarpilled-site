@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Newsletter — solarpilled" description="Solar research worth reading, delivered to your inbox. No spam, no sales.">
+  <section class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+      The solarpilled newsletter
+    </h1>
+    <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-10">
+      Solar research for your inbox. The same data-driven analysis from the site, plus occasional insights we don't publish elsewhere.
+    </p>
+
+    <!-- What you get -->
+    <div class="space-y-6 mb-12">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">What you'll get</h2>
+      <div class="grid gap-4">
+        <div class="flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-lg bg-solar-100 dark:bg-solar-900/30 flex items-center justify-center text-solar-600 dark:text-solar-400 shrink-0" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          </div>
+          <div>
+            <h3 class="font-medium text-slate-900 dark:text-white">Market analysis & data</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Panel prices, battery costs, policy changes — the numbers that actually affect your decision, with context.</p>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-lg bg-solar-100 dark:bg-solar-900/30 flex items-center justify-center text-solar-600 dark:text-solar-400 shrink-0" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <div>
+            <h3 class="font-medium text-slate-900 dark:text-white">New tools & calculators</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Be the first to use our solar analysis tools. Early access, plus we'll use your feedback to improve them.</p>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-lg bg-solar-100 dark:bg-solar-900/30 flex items-center justify-center text-solar-600 dark:text-solar-400 shrink-0" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+          </div>
+          <div>
+            <h3 class="font-medium text-slate-900 dark:text-white">Deep dives & guides</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Longer pieces that break down complex topics — net metering policy, battery economics, installer red flags.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expectations -->
+    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 mb-10">
+      <h2 class="font-semibold text-slate-900 dark:text-white mb-3">What to expect</h2>
+      <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+        <li class="flex gap-2">
+          <span class="text-solar-500" aria-hidden="true">✓</span>
+          ~2 emails per month (we write when we have something worth saying)
+        </li>
+        <li class="flex gap-2">
+          <span class="text-solar-500" aria-hidden="true">✓</span>
+          Unsubscribe in one click, anytime
+        </li>
+        <li class="flex gap-2">
+          <span class="text-solar-500" aria-hidden="true">✓</span>
+          No spam, no selling your email, no partner offers
+        </li>
+        <li class="flex gap-2">
+          <span class="text-solar-500" aria-hidden="true">✓</span>
+          Plain text option available (because some people are right about HTML email)
+        </li>
+      </ul>
+    </div>
+
+    <!-- Signup form -->
+    <div class="bg-white dark:bg-slate-950 border-2 border-solar-200 dark:border-solar-800 rounded-2xl p-6 sm:p-8">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">Subscribe</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Join homeowners who research before they buy.</p>
+      <form action="/api/newsletter/subscribe" method="POST" class="newsletter-form space-y-4">
+        <div>
+          <label for="newsletter-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email address</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+            class="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-solar-500 focus:border-transparent"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full px-6 py-3 rounded-lg bg-solar-500 hover:bg-solar-600 text-white font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-solar-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950 cursor-pointer"
+        >
+          Subscribe to the newsletter
+        </button>
+      </form>
+      <p class="text-xs text-slate-400 dark:text-slate-500 mt-3 text-center">Free. No credit card. No tricks. <a href="/about#privacy" class="underline hover:text-slate-600 dark:hover:text-slate-300">Privacy policy</a>.</p>
+      <p class="newsletter-status text-sm mt-3 text-center hidden"></p>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.querySelectorAll('.newsletter-form').forEach(form => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const emailInput = form.querySelector('#newsletter-email');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const statusEl = form.parentElement.querySelector('.newsletter-status');
+        const email = emailInput.value.trim();
+        if (!email) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Subscribing...';
+
+        try {
+          const res = await fetch('/api/newsletter/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            form.innerHTML = '<p class="text-center text-solar-600 dark:text-solar-400 font-medium py-4">📬 Check your email to confirm your subscription.</p>';
+            statusEl?.classList.add('hidden');
+          } else {
+            statusEl.textContent = data.error || 'Something went wrong.';
+            statusEl.className = 'newsletter-status text-sm mt-3 text-center text-red-500';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Subscribe to the newsletter';
+          }
+        } catch (err) {
+          statusEl.textContent = 'Network error. Please try again.';
+          statusEl.className = 'newsletter-status text-sm mt-3 text-center text-red-500';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Subscribe to the newsletter';
+        }
+      });
+    });
+  </script>
+</BaseLayout>

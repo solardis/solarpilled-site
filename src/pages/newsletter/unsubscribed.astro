@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Unsubscribed — solarpilled" description="You've been unsubscribed from the solarpilled newsletter.">
+  <section class="max-w-lg mx-auto px-4 sm:px-6 py-20 text-center">
+    <div class="text-5xl mb-6" aria-hidden="true">👋</div>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+      Unsubscribed
+    </h1>
+    <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+      You've been removed from the newsletter. No more emails from us.
+    </p>
+    <p class="text-sm text-slate-400 dark:text-slate-500 mb-8">
+      Changed your mind? You can always <a href="/newsletter" class="text-solar-600 dark:text-solar-400 hover:underline">re-subscribe</a>.
+    </p>
+    <p>
+      <a href="/" class="text-sm text-solar-600 dark:text-solar-400 hover:text-solar-700 dark:hover:text-solar-300 transition-colors">
+        ← Back to solarpilled.com
+      </a>
+    </p>
+  </section>
+</BaseLayout>

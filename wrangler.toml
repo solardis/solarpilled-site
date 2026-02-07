@@ -7,8 +7,22 @@ pages_build_output_dir = "dist"
 binding = "CACHE"
 id = "bf4dede5dd1f4ff1b54d3cc4dfff0aae"
 
-# D1 Database binding (pending token permission update)
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "solarpilled-db"
-# database_id = "<pending>"
+# D1 Database binding for newsletter subscribers
+# To create: wrangler d1 create solarpilled-db
+# Then update database_id below
+[[d1_databases]]
+binding = "DB"
+database_name = "solarpilled-db"
+database_id = "PLACEHOLDER_REPLACE_WITH_ACTUAL_ID"
+
+# Environment variables (set secrets via `wrangler pages secret put`)
+# Required secrets:
+#   RESEND_API_KEY - API key from resend.com
+#
+# Set via wrangler pages secret put:
+#   wrangler pages secret put RESEND_API_KEY
+#
+# Non-secret vars:
+[vars]
+SITE_URL = "https://solarpilled.com"
+CANSPAM_ADDRESS = "solarpilled.com · Austin, TX"

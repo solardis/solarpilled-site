@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Something went wrong — solarpilled" description="There was an issue with your newsletter request.">
+  <section class="max-w-lg mx-auto px-4 sm:px-6 py-20 text-center">
+    <div class="text-5xl mb-6" aria-hidden="true">⚠️</div>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+      Something went wrong
+    </h1>
+    <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+      The link you used may be expired or invalid. This can happen if you clicked an old confirmation link.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+      <a href="/newsletter" class="px-6 py-2.5 rounded-lg bg-solar-500 hover:bg-solar-600 text-white font-medium text-sm transition-colors">
+        Try subscribing again
+      </a>
+      <a href="/" class="px-6 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+        Back to home
+      </a>
+    </div>
+  </section>
+</BaseLayout>
